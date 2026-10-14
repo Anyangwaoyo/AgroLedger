@@ -1,0 +1,6 @@
+{
+  "name": "AgroLedger",
+  "description": "Simple digital bookkeeping tool for small rice, maize, and soybean businesses in Nigeria. Record transactions, track customer debts, and know your profit.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

@@ -1,0 +1,29 @@
+@import "tailwindcss";
+
+@layer base {
+  body {
+    font-family: 'Plus Jakarta Sans', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+    background-color: #FAF9F5;
+    color: #1E2621;
+  }
+
+  /* Custom scrollbar for transaction tables */
+  ::-webkit-scrollbar {
+    width: 6px;
+    height: 6px;
+  }
+  ::-webkit-scrollbar-track {
+    background: #F4F2EB;
+  }
+  ::-webkit-scrollbar-thumb {
+    background: #D2CDC0;
+    border-radius: 3px;
+  }
+  ::-webkit-scrollbar-thumb:hover {
+    background: #B6B0A2;
+  }
+}
+
+.font-display {
+  font-family: 'Space Grotesk', 'Plus Jakarta Sans', sans-serif;
+}
