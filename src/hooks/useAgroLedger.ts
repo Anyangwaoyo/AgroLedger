@@ -6,13 +6,11 @@ import { getDebtOutstandingBalance, getDateRangeForFilter, getTodayDateString } 
 export function useAgroLedger() {
   const [transactions, setTransactions] = useState<Transaction[]>([]);
   const [debts, setDebts] = useState<Debt[]>([]);
-  const [isDemo, setIsDemo] = useState<boolean>(false);
   const [isLoading, setIsLoading] = useState<boolean>(true);
 
   const refreshData = useCallback(() => {
     setTransactions(storageService.getTransactions());
     setDebts(storageService.getDebts());
-    setIsDemo(storageService.isDemoMode());
     setIsLoading(false);
   }, []);
 
@@ -67,11 +65,6 @@ export function useAgroLedger() {
     const success = storageService.deleteDebt(id);
     refreshData();
     return success;
-  }, [refreshData]);
-
-  const loadDemoData = useCallback(() => {
-    storageService.loadSampleData();
-    refreshData();
   }, [refreshData]);
 
   const resetToEmpty = useCallback(() => {
@@ -256,7 +249,6 @@ export function useAgroLedger() {
     transactions,
     debts,
     sortedDebts,
-    isDemo,
     isLoading,
     debtMetrics,
     todayMetrics,
@@ -267,7 +259,6 @@ export function useAgroLedger() {
     addDebt,
     addRepayment,
     deleteDebt,
-    loadDemoData,
     resetToEmpty,
     getProfitSummaryForFilter
   };

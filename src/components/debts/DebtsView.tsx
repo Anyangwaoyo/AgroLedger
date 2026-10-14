@@ -27,6 +27,7 @@ interface DebtsViewProps {
   onAddDebt: () => void;
   onAddRepayment: (debtId: string, repayment: Omit<DebtRepayment, 'id' | 'createdAt' | 'debtId'>) => void;
   onDeleteDebt: (id: string) => void;
+  requireAuth?: (actionName: string, action: () => void) => boolean;
 }
 
 export const DebtsView: React.FC<DebtsViewProps> = ({
@@ -34,6 +35,7 @@ export const DebtsView: React.FC<DebtsViewProps> = ({
   onAddDebt,
   onAddRepayment,
   onDeleteDebt,
+  requireAuth,
 }) => {
   // Tabs: 'outstanding' | 'all' | 'paid' (defaults to 'outstanding' so outstanding debts show first!)
   const [activeFilter, setActiveFilter] = useState<'outstanding' | 'all' | 'paid'>('outstanding');
@@ -114,7 +116,7 @@ export const DebtsView: React.FC<DebtsViewProps> = ({
   };
 
   return (
-    <div className="space-y-6 pb-20 md:pb-12">
+    <div className="space-y-5 sm:space-y-6 pb-28 md:pb-12">
       {/* Top action & header */}
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
         <div>
@@ -374,8 +376,14 @@ export const DebtsView: React.FC<DebtsViewProps> = ({
                       <span>History ({repaymentsCount})</span>
                     </button>
                     <button
-                      onClick={() => setDebtToDelete(debt)}
-                      className="p-1.5 rounded-lg text-[#6B756F] hover:text-red-600 hover:bg-red-50 transition-colors"
+                      onClick={() => {
+                        if (requireAuth) {
+                          requireAuth('deleting customer debts', () => setDebtToDelete(debt));
+                        } else {
+                          setDebtToDelete(debt);
+                        }
+                      }}
+                      className="p-1.5 rounded-lg text-[#6B756F] hover:text-red-600 hover:bg-red-50 transition-colors cursor-pointer"
                       title="Delete customer debt record"
                     >
                       <Trash2 className="w-4 h-4" />
@@ -384,8 +392,14 @@ export const DebtsView: React.FC<DebtsViewProps> = ({
 
                   {!isPaid && (
                     <button
-                      onClick={() => setRepayingDebt(debt)}
-                      className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-xl text-xs font-bold text-white bg-[#107548] hover:bg-[#0C5836] shadow-2xs transition-colors"
+                      onClick={() => {
+                        if (requireAuth) {
+                          requireAuth('recording debt repayments', () => setRepayingDebt(debt));
+                        } else {
+                          setRepayingDebt(debt);
+                        }
+                      }}
+                      className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-xl text-xs font-bold text-white bg-[#107548] hover:bg-[#0C5836] shadow-2xs transition-colors cursor-pointer"
                     >
                       <CreditCard className="w-3.5 h-3.5" />
                       Record Repayment

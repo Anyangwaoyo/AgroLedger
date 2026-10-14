@@ -124,28 +124,6 @@ class AuthService {
     window.localStorage.removeItem(STORAGE_ACTIVE_PROFILE_KEY);
     window.dispatchEvent(new Event('agroledger_auth_changed'));
   }
-
-  /**
-   * Quick guest/demo mode profile for immediate exploration
-   */
-  public enterGuestDemo(profileData?: Partial<BusinessProfile>): BusinessProfile {
-    const defaultProfile: BusinessProfile = {
-      id: 'biz_demo_default',
-      email: 'trader@agroledger.ng',
-      fullName: 'Ibrahim Abubakar',
-      businessName: 'Dawanau Grain Ventures',
-      businessType: 'Grain Trader',
-      mainGrain: 'Maize',
-      stateOfOperation: 'Kano',
-      createdAt: new Date().toISOString(),
-      ...profileData,
-    };
-
-    this.currentProfile = defaultProfile;
-    window.localStorage.setItem(STORAGE_ACTIVE_PROFILE_KEY, JSON.stringify(defaultProfile));
-    window.dispatchEvent(new Event('agroledger_auth_changed'));
-    return defaultProfile;
-  }
 }
 
 export const authService = new AuthService();

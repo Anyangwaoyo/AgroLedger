@@ -25,6 +25,16 @@ export const WelcomePopup: React.FC<WelcomePopupProps> = ({ profile }) => {
     }
   }, [profile]);
 
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === 'Escape' && isOpen) {
+        handleDismiss();
+      }
+    };
+    window.addEventListener('keydown', handleKeyDown);
+    return () => window.removeEventListener('keydown', handleKeyDown);
+  }, [isOpen, profile]);
+
   const handleDismiss = () => {
     if (profile) {
       const key = `agroledger_welcome_seen_${profile.id}`;
@@ -36,11 +46,15 @@ export const WelcomePopup: React.FC<WelcomePopupProps> = ({ profile }) => {
   if (!isOpen) return null;
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-xs animate-in fade-in duration-200">
+    <div 
+      className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-xs animate-in fade-in duration-200"
+      onClick={handleDismiss}
+    >
       <div 
-        className="w-full max-w-lg bg-white rounded-3xl shadow-2xl border border-[#E8E6DF] overflow-hidden animate-in zoom-in-95 duration-200"
+        className="w-full max-w-lg bg-white rounded-3xl shadow-2xl border border-[#E8E6DF] overflow-hidden animate-in zoom-in-95 duration-200 relative"
         role="dialog"
         aria-modal="true"
+        onClick={(e) => e.stopPropagation()}
       >
         {/* Decorative Top Accent Banner */}
         <div className="bg-[#144D34] px-6 pt-7 pb-6 text-white relative">

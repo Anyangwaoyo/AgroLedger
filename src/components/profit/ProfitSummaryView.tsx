@@ -58,7 +58,7 @@ export const ProfitSummaryView: React.FC<ProfitSummaryViewProps> = ({ useAgroLed
   };
 
   return (
-    <div className="space-y-6 pb-20 md:pb-12">
+    <div className="space-y-5 sm:space-y-6 pb-28 md:pb-12">
       {/* Header & Controls */}
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
         <div>

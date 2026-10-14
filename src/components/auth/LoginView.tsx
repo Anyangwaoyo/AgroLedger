@@ -6,8 +6,7 @@ import {
   AlertCircle, 
   ArrowRight,
   Eye,
-  EyeOff,
-  Sparkles
+  EyeOff
 } from 'lucide-react';
 import { authService } from '../../services/authService';
 
@@ -56,11 +55,6 @@ export const LoginView: React.FC<LoginViewProps> = ({
     } else {
       setServerError(result.error || 'Failed to sign in. Please verify your email and password.');
     }
-  };
-
-  const handleTestDemoLogin = () => {
-    authService.enterGuestDemo();
-    onSuccess();
   };
 
   return (
@@ -156,18 +150,6 @@ export const LoginView: React.FC<LoginViewProps> = ({
               >
                 <span>{isSubmitting ? 'Signing In...' : 'Sign In to Dashboard'}</span>
                 <ArrowRight className="w-4 h-4" />
-              </button>
-            </div>
-
-            {/* Quick Demo Option */}
-            <div className="text-center pt-1">
-              <button
-                type="button"
-                onClick={handleTestDemoLogin}
-                className="inline-flex items-center gap-1.5 text-xs font-bold text-[#144D34] hover:underline cursor-pointer"
-              >
-                <Sparkles className="w-3.5 h-3.5 text-[#D97706]" />
-                <span>Explore Demo Mode Directly &rarr;</span>
               </button>
             </div>
           </form>

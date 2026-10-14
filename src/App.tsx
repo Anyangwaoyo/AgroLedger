@@ -145,24 +145,20 @@ export default function App() {
       <Navbar
         activeTab={activeTab}
         setActiveTab={setActiveTab}
-        isDemo={agroLedger.isDemo}
         hasRecords={hasRecords}
         profile={profile}
-        onLoadDemo={agroLedger.loadDemoData}
-        onReset={() => setIsResetConfirmOpen(true)}
         onSignOut={handleSignOut}
         onOpenAuth={(mode, prompt) => handleOpenAuth(mode, prompt)}
       />
 
       {/* Main Content Area - Accessible to all visitors so they can explore every feature */}
-      <main className="flex-1 max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 pt-6 sm:pt-8">
+      <main className="flex-1 max-w-7xl w-full mx-auto px-3 sm:px-6 lg:px-8 pt-4 sm:pt-8">
         {activeTab === 'overview' && (
           <DashboardOverview
             useAgroLedgerHook={agroLedger}
             setActiveTab={setActiveTab}
             onOpenTransactionModal={handleOpenNewTransaction}
             onOpenDebtModal={handleOpenNewDebt}
-            onLoadDemo={agroLedger.loadDemoData}
           />
         )}
 
@@ -172,6 +168,7 @@ export default function App() {
             onAddTransaction={handleOpenNewTransaction}
             onEditTransaction={handleEditTransaction}
             onDeleteTransaction={handleDeleteTransaction}
+            requireAuth={requireAuth}
           />
         )}
 
@@ -181,6 +178,7 @@ export default function App() {
             onAddDebt={handleOpenNewDebt}
             onAddRepayment={handleAddRepayment}
             onDeleteDebt={handleDeleteDebt}
+            requireAuth={requireAuth}
           />
         )}
 

@@ -10,8 +10,7 @@ import {
   AlertCircle, 
   ArrowRight,
   Eye,
-  EyeOff,
-  Sparkles
+  EyeOff
 } from 'lucide-react';
 import { BusinessType, MainGrainType, RegistrationFormData } from '../../types';
 import { authService } from '../../services/authService';
@@ -128,11 +127,6 @@ export const RegisterView: React.FC<RegisterViewProps> = ({
     } else {
       setServerError(result.error || 'Registration failed. Please try again.');
     }
-  };
-
-  const handleQuickDemoEnter = () => {
-    authService.enterGuestDemo();
-    onSuccess();
   };
 
   return (
@@ -368,18 +362,6 @@ export const RegisterView: React.FC<RegisterViewProps> = ({
               >
                 <span>{isSubmitting ? 'Creating Business Profile...' : 'Complete Registration & Open Ledger'}</span>
                 <ArrowRight className="w-4 h-4" />
-              </button>
-            </div>
-
-            {/* Quick Demo Option */}
-            <div className="text-center pt-1">
-              <button
-                type="button"
-                onClick={handleQuickDemoEnter}
-                className="inline-flex items-center gap-1.5 text-xs font-bold text-[#144D34] hover:underline cursor-pointer"
-              >
-                <Sparkles className="w-3.5 h-3.5 text-[#D97706]" />
-                <span>Explore Demo Mode Directly &rarr;</span>
               </button>
             </div>
           </form>

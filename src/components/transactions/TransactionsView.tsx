@@ -20,6 +20,7 @@ interface TransactionsViewProps {
   onAddTransaction: () => void;
   onEditTransaction: (tx: Transaction) => void;
   onDeleteTransaction: (id: string) => void;
+  requireAuth?: (actionName: string, action: () => void) => boolean;
 }
 
 export const TransactionsView: React.FC<TransactionsViewProps> = ({
@@ -27,6 +28,7 @@ export const TransactionsView: React.FC<TransactionsViewProps> = ({
   onAddTransaction,
   onEditTransaction,
   onDeleteTransaction,
+  requireAuth,
 }) => {
   const [typeFilter, setTypeFilter] = useState<'all' | TransactionType>('all');
   const [dateFilter, setDateFilter] = useState<DateFilterOption>('all');
@@ -100,7 +102,7 @@ export const TransactionsView: React.FC<TransactionsViewProps> = ({
   };
 
   return (
-    <div className="space-y-6 pb-20 md:pb-12">
+    <div className="space-y-5 sm:space-y-6 pb-28 md:pb-12">
       {/* Top action & header */}
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
         <div>
@@ -404,8 +406,14 @@ export const TransactionsView: React.FC<TransactionsViewProps> = ({
                             <Pencil className="w-4 h-4" />
                           </button>
                           <button
-                            onClick={() => setTxToDelete(tx)}
-                            className="p-1.5 rounded-lg text-[#6B756F] hover:text-red-600 hover:bg-red-50 transition-colors"
+                            onClick={() => {
+                              if (requireAuth) {
+                                requireAuth('deleting transactions', () => setTxToDelete(tx));
+                              } else {
+                                setTxToDelete(tx);
+                              }
+                            }}
+                            className="p-1.5 rounded-lg text-[#6B756F] hover:text-red-600 hover:bg-red-50 transition-colors cursor-pointer"
                             title="Delete transaction"
                           >
                             <Trash2 className="w-4 h-4" />
@@ -472,8 +480,14 @@ export const TransactionsView: React.FC<TransactionsViewProps> = ({
                       Edit
                     </button>
                     <button
-                      onClick={() => setTxToDelete(tx)}
-                      className="px-3 py-1 rounded-lg text-xs font-semibold text-red-600 bg-red-50 hover:bg-red-100 transition-colors"
+                      onClick={() => {
+                        if (requireAuth) {
+                          requireAuth('deleting transactions', () => setTxToDelete(tx));
+                        } else {
+                          setTxToDelete(tx);
+                        }
+                      }}
+                      className="px-3 py-1 rounded-lg text-xs font-semibold text-red-600 bg-red-50 hover:bg-red-100 transition-colors cursor-pointer"
                     >
                       Delete
                     </button>
